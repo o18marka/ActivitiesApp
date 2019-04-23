@@ -2,7 +2,9 @@ package com.example.brom.activitiesapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -20,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.d("bron","onCreate() called");
+
+        Button b = (Button) findViewById(R.id.startaActivity);
+        b.setText("Hallå!");
 
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,R.layout.my_item,R.id.my_item,listData);//Här
         ListView my_listview=(ListView) findViewById(R.id.my_item);//här
