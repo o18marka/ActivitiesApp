@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
-    public String EXTRA_MESSAGE = "";
+    public static String  EXTRA_MESSAGE = " ";
     private String[] mountainNames = {"Matterhorn","Mont Blanc","Denali"};
     private String[] mountainLocations = {"Alps","Alps","Alaska"};
     private int[] mountainHeights ={4478,4808,6190};
@@ -31,30 +31,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button b = (Button) findViewById(R.id.startaActivity);
+        b.setText("TestKnapp!(Gör inget)");
+
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,R.layout.my_item,R.id.my_item,listData);//Här
+        ListView my_listview=(ListView) findViewById(R.id.my_item);//här
+        my_listview.setAdapter(adapter);//här
+
         mountainArrayList.add(new mountain("Matterhorn","Alps",4478)); //här
         mountainArrayList.add(new mountain("Mont Blanc","Alps",4808)); //här
         mountainArrayList.add(new mountain("Denali","Alaska",6190)); //här
 
         ArrayAdapter<mountain> adapter2=new ArrayAdapter<mountain>(this,R.layout.my_item,R.id.my_item,mountainArrayList); //här
 
-        Log.d("brom","onCreate() called");
-
-        Button b = (Button) findViewById(R.id.startaActivity);
-        b.setText("Hallå!");
-
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,R.layout.my_item,R.id.my_item,listData);//Här
-        ListView my_listview=(ListView) findViewById(R.id.my_item);//här
-        my_listview.setAdapter(adapter);//här
-
-
-
         my_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() { //Min Toast
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     Intent intent = new Intent(MainActivity.this, MountainDetailsActivity.class);
+                    String mountaininfo = mountainArrayList.get(position).info();
+                    intent.putExtra(EXTRA_MESSAGE, mountaininfo);
                     startActivity(intent);
-                    String test = mountainArrayList.get(position).info();
-                    intent.putExtra(EXTRA_MESSAGE, test);
 
             }
         });
@@ -86,6 +82,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("brom", "onStop() called.");
     }
 }
