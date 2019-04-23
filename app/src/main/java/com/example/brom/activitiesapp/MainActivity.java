@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
+    public String EXTRA_MESSAGE = "";
     private String[] mountainNames = {"Matterhorn","Mont Blanc","Denali"};
     private String[] mountainLocations = {"Alps","Alps","Alaska"};
     private int[] mountainHeights ={4478,4808,6190};
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(MainActivity.this, MountainDetailsActivity.class);
                     startActivity(intent);
+                    String test = mountainArrayList.get(position).info();
+                    intent.putExtra(EXTRA_MESSAGE, test);
 
             }
         });
