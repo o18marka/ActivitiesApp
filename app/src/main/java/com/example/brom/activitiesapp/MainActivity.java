@@ -1,11 +1,17 @@
 package com.example.brom.activitiesapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private int[] mountainHeights ={4478,4808,6190};
     // Create ArrayLists from the raw data above and use these lists when populating your ListView.
     private ArrayList<String> listData=new ArrayList<>(Arrays.asList(mountainNames));
+    private ArrayList<mountain> mountainArrayList=new ArrayList<>(); //här
 
 
     @Override
@@ -23,7 +30,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("bron","onCreate() called");
+        mountainArrayList.add(new mountain("Matterhorn","Alps",4478)); //här
+        mountainArrayList.add(new mountain("Mont Blanc","Alps",4808)); //här
+        mountainArrayList.add(new mountain("Denali","Alaska",6190)); //här
+
+        ArrayAdapter<mountain> adapter2=new ArrayAdapter<mountain>(this,R.layout.my_item,R.id.my_item,mountainArrayList); //här
+
+        Log.d("brom","onCreate() called");
 
         Button b = (Button) findViewById(R.id.startaActivity);
         b.setText("Hallå!");
@@ -31,6 +44,18 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,R.layout.my_item,R.id.my_item,listData);//Här
         ListView my_listview=(ListView) findViewById(R.id.my_item);//här
         my_listview.setAdapter(adapter);//här
+
+
+
+        my_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() { //Min Toast
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    Intent intent = new Intent(MainActivity.this, MountainDetailsActivity.class);
+                    startActivity(intent);
+
+            }
+        });
+
 
         // 1. Create a ListView as in previous assignment
         // 2. Create a new activity named "MountainDetailsActivity
@@ -51,5 +76,13 @@ public class MainActivity extends AppCompatActivity {
         // 8. From the MountainDetailsActivity you should have an option to "go back" using an
         //    left arro button. This is done by letting the MainActivity be the parent activity to
         //    MountainDetailsActivity.
+    }
+
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("brom", "onStop() called.");
     }
 }
